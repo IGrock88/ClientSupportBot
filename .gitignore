@@ -1,0 +1,9 @@
+/.idea/
+/logs/
+CheckPrinter.iml
+/target/
+/src/main/resources/config.properties
+/src/main/resources/kkt.json
+kkt.json
+/src/main/resources/db.s3db
+/db.s3db

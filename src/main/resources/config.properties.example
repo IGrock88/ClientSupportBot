@@ -1,0 +1,7 @@
+restApiPort=11111
+isActiveChatBot=true
+authToken=some_token
+authIsActive=true
+dbPath=some_path
+botToken=some_token
+botPass=some_path

@@ -2,13 +2,15 @@ package ru.onlineService.telegramBot.chatData;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import ru.onlineService.telegramBot.Bot;
 
 public class Chat {
 
     private String id;
     private String userName;
+    private String botId;
 
-    private transient TelegramBot bot;
+    private final transient Bot bot;
 
     public String getUserName() {
         return userName;
@@ -18,19 +20,20 @@ public class Chat {
         return id;
     }
 
-    public Chat setBot(TelegramBot bot) {
-        this.bot = bot;
+    public Chat setBotId(String botId) {
+        this.botId = botId;
         return this;
     }
 
-    public Chat(String id, String userName, TelegramBot bot) {
+    public Chat(String id, String userName, Bot bot) {
         this.id = id;
         this.userName = userName;
         this.bot = bot;
+        this.botId = bot.getId();
     }
 
     public void sendMessage(String text){
-        bot.execute(new SendMessage(id, text));
+        bot.getTelegramBot().execute(new SendMessage(id, text));
     }
 
 

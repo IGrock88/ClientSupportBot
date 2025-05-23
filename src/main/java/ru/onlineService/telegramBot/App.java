@@ -12,7 +12,7 @@ public class App {
 
         try {
             this.configure();
-            new Bot().init();
+            BotHandler.getInstance();
             StartServer.start();
         } catch (Exception e) {
             LoggerHelper.errorWithSendingBot("Ошибка инициализац:\n" + e.getMessage(), e);

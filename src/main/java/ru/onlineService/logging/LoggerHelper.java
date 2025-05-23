@@ -17,14 +17,6 @@ public class LoggerHelper {
         LOGGER.log(level, msg);
     }
 
-    public static void errorWithSendingBot(String msg, Throwable throwable){
-        Bot.sendBroadCast(error(msg,throwable));
-    }
-
-    public static void errorWithoutStacktraceAndSendingToBot(String msg){
-        Bot.sendBroadCast(msg);
-        log(Level.SEVERE, msg);
-    }
 
     public static String error(String msg, Throwable throwable){
         if (throwable.getStackTrace().length > 0){

@@ -8,7 +8,8 @@ public class Constants {
     public static boolean isActiveChatBot;
     public static String authToken;
     public static boolean authIsActive;
-    public static String botToken;
+    public static String botTokenTech;
+    public static String botTokenOrg;
     public static String dbPath;
     public static String botPass;
 
@@ -31,10 +32,16 @@ public class Constants {
             authIsActive = false;
         }
         try {
-            botToken = ConfigProperties.getProperty("botToken");
+            botTokenTech = ConfigProperties.getProperty("botTokenTech");
         }catch (ApplicationException e){
-            botToken = null;
+            botTokenTech = null;
             isActiveChatBot = false;
+        }
+
+        try {
+            botTokenOrg = ConfigProperties.getProperty("botTokenOrg");
+        }catch (ApplicationException e){
+            botTokenOrg = null;
         }
 
         try {

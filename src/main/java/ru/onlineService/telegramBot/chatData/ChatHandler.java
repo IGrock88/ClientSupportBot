@@ -1,25 +1,17 @@
 package ru.onlineService.telegramBot.chatData;
 
-import com.pengrad.telegrambot.TelegramBot;
+import ru.onlineService.telegramBot.Bot;
 
 import java.util.HashMap;
 
 public class ChatHandler {
 
     private HashMap<String, Chat> chatHashMap;
-    private TelegramBot bot;
-    private static ChatHandler chatHandler;
+    private Bot bot;
 
-    public static ChatHandler getInstance(TelegramBot bot) {
-        if (chatHandler == null){
-            chatHandler = new ChatHandler(bot);
-        }
-        return chatHandler;
-    }
-
-    private ChatHandler(TelegramBot bot) {
+    public ChatHandler(Bot bot) {
         this.bot = bot;
-        chatHashMap = ChatDb.getInstance().getAllChats();
+        chatHashMap = ChatDb.getInstance().getAllChats(bot);
     }
 
     public ChatHandler addChat(Chat chat){
@@ -39,7 +31,7 @@ public class ChatHandler {
     }
 
     public ChatHandler sendBroadCostMessage(String message){
-        if (chatHashMap.size() == 0){
+        if (chatHashMap.isEmpty()){
             return this;
         }
         for (Chat chat: chatHashMap.values()){

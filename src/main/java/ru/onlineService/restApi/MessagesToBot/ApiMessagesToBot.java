@@ -5,8 +5,11 @@ import ru.onlineService.gson.GsonHelper;
 import ru.onlineService.logging.LoggerHelper;
 import ru.onlineService.restApi.ResultJson;
 import ru.onlineService.telegramBot.Bot;
+import ru.onlineService.telegramBot.BotHandler;
 import spark.Request;
 import spark.Response;
+
+import java.util.List;
 
 public class ApiMessagesToBot {
 
@@ -31,12 +34,14 @@ public class ApiMessagesToBot {
         ResultJson resultJson = new ResultJson(true);
         try {
             RequestAddMessageToBot requestAddMessageToBot = GsonHelper.getGson().fromJson(request.body(), RequestAddMessageToBot.class);
-            if (requestAddMessageToBot.getMessage() == null || requestAddMessageToBot.getMessage().length() == 0){
+
+            List<String> errors = ApiMessageValidator.validate(requestAddMessageToBot);
+            if (!errors.isEmpty()){
                 resultJson.setSuccess(false);
-                resultJson.addError("Не передано сообщение");
+                resultJson.addError(String.join(";\n", errors));
             }
             else {
-                Bot.sendBroadCast(requestAddMessageToBot.getMessage());
+                BotHandler.getInstance().sendMessageToBot(requestAddMessageToBot.getBotId(), requestAddMessageToBot.getBotMessage());
             }
         } catch (JsonSyntaxException e){
             String error = "Синтаксическая ошибка в теле запроса json: " + e.getMessage();

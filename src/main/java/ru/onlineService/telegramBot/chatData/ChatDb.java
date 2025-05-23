@@ -36,23 +36,22 @@ public class ChatDb {
         }
     }
 
-    public HashMap<String, Chat> getAllChats() {
+    public HashMap<String, Chat> getAllChats(Bot bot) {
         HashMap<String, Chat> result = new HashMap<>();
-        TelegramBot telegramBot = Bot.getBot();
         try {
-            ResultSet rs = Sqllite.getInstanceDb().createStatement().executeQuery("SELECT * FROM chat WHERE 1");
+            ResultSet rs = Sqllite.getInstanceDb().createStatement().executeQuery("SELECT * FROM chat WHERE botId = " + bot.getId());
             while (rs.next()) {
-                Chat chat = new Chat(rs.getString("id"), rs.getString("userName"), telegramBot);
+                Chat chat = new Chat(rs.getString("id"), rs.getString("userName"), bot);
                 result.put(chat.getId(), chat);
             }
         } catch (SQLException e) {
-            LoggerHelper.errorWithSendingBot(e.getMessage(), e);
+            LoggerHelper.error(e.getMessage(), e);
         }
         finally {
             try {
                 Sqllite.getInstanceDb().close();
             } catch (SQLException e) {
-                LoggerHelper.errorWithSendingBot(e.getMessage(), e);
+                LoggerHelper.error(e.getMessage(), e);
             }
         }
 
@@ -66,13 +65,13 @@ public class ChatDb {
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            LoggerHelper.errorWithSendingBot(e.getMessage(), e);
+            LoggerHelper.error(e.getMessage(), e);
         }
         finally {
             try {
                 Sqllite.getInstanceDb().close();
             } catch (SQLException e) {
-                LoggerHelper.errorWithSendingBot(e.getMessage(), e);
+                LoggerHelper.error(e.getMessage(), e);
             }
         }
     }

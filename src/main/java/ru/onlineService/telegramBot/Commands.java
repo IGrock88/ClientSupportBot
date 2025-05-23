@@ -17,9 +17,9 @@ public class Commands {
 
 
     public ChatHandler chatHandler;
-    public TelegramBot bot;
+    public Bot bot;
 
-    public Commands(ChatHandler chatHandler, TelegramBot bot) {
+    public Commands(ChatHandler chatHandler, Bot bot) {
         this.chatHandler = chatHandler;
         this.bot = bot;
     }
@@ -31,7 +31,7 @@ public class Commands {
         String chatId = String.valueOf(update.message().chat().id());
 
         if (update.message().text().startsWith("/start") || update.message().text().startsWith("/help")) {
-            bot.execute(new SendMessage(chatId, "Здравствуйте. Для подписки на сообщения необходимо авторизоваться\n\n" +
+            bot.getTelegramBot().execute(new SendMessage(chatId, "Здравствуйте. Для подписки на сообщения необходимо авторизоваться\n\n" +
                     "Список комманд: \n" + AUTH + " [пароль] - без квадратных скобок. Авторизация\n" +
                     EXIT + " - выход  "));
             return;
@@ -44,14 +44,14 @@ public class Commands {
 
         Chat chat = chatHandler.getChat(chatId);
         if (chat == null) {
-            bot.execute(new SendMessage(chatId, "Требуется авторизация"));
+            bot.getTelegramBot().execute(new SendMessage(chatId, "Требуется авторизация"));
             return;
         }
         if (update.message().text().startsWith(EXIT)) {
             chatHandler.removeChat(chatId);
-            bot.execute(new SendMessage(chatId, "Выход выполнен"));
+            bot.getTelegramBot().execute(new SendMessage(chatId, "Выход выполнен"));
         } else {
-            bot.execute(new SendMessage(chatId, "Не известная команда"));
+            bot.getTelegramBot().execute(new SendMessage(chatId, "Не известная команда"));
         }
     }
 

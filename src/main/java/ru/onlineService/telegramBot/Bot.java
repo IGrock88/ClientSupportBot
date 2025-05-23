@@ -11,10 +11,22 @@ import java.util.concurrent.Executors;
 
 public class Bot {
 
-    private static ChatHandler chatHandler;
-    private static TelegramBot bot;
+    private String id;
+    private ChatHandler chatHandler;
+    private TelegramBot telegramBot;
+    private String botToken;
 
-    public static void sendBroadCast(String message){
+    public Bot(String id, String botToken) {
+        this.id = id;
+        this.botToken = botToken;
+        init();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void sendBroadCast(String message){
         try {
             System.out.println(message);
             if (Constants.isActiveChatBot){
@@ -32,21 +44,19 @@ public class Bot {
 
     }
 
-    public static TelegramBot getBot(){
-        if (bot == null){
-            bot = new TelegramBot(Constants.botToken);
-        }
-        return bot;
+    public TelegramBot getTelegramBot(){
+        return telegramBot;
     }
 
-    public void init(){
+    private void init(){
         if (!Constants.isActiveChatBot){
             return;
         }
+        telegramBot = new TelegramBot(botToken);
+        chatHandler = new ChatHandler(this);
         Executors.newSingleThreadExecutor().execute(() -> {
-            chatHandler = ChatHandler.getInstance(bot);
-            Commands commands = new Commands(chatHandler, bot);
-            bot.setUpdatesListener(updates -> {
+            Commands commands = new Commands(chatHandler, this);
+            telegramBot.setUpdatesListener(updates -> {
 
                 try {
                     for (Update update : updates) {

@@ -15,7 +15,7 @@ public class Sqllite
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + Constants.dbPath);
         }catch (SQLException e){
-            LoggerHelper.errorWithSendingBot(e.getMessage(), e);
+            LoggerHelper.error(e.getMessage(), e);
         }
 
         return connection;

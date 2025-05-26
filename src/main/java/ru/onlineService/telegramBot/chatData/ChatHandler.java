@@ -24,9 +24,9 @@ public class ChatHandler {
         return this;
     }
 
-    public ChatHandler removeChat(String chatId){
-        chatHashMap.remove(chatId);
-        ChatDb.getInstance().remove(chatId);
+    public ChatHandler removeChat(Chat chat){
+        chatHashMap.remove(chat.getId());
+        ChatDb.getInstance().remove(chat);
         return this;
     }
 

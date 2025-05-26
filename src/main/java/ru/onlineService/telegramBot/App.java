@@ -15,7 +15,7 @@ public class App {
             BotHandler.getInstance();
             StartServer.start();
         } catch (Exception e) {
-            LoggerHelper.errorWithSendingBot("Ошибка инициализац:\n" + e.getMessage(), e);
+            LoggerHelper.error("Ошибка инициализац:\n" + e.getMessage(), e);
             return;
         }
     }

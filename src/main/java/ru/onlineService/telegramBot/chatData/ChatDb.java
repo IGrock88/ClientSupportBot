@@ -1,6 +1,5 @@
 package ru.onlineService.telegramBot.chatData;
 
-import com.pengrad.telegrambot.TelegramBot;
 import ru.onlineService.jdbc.Sqllite;
 import ru.onlineService.logging.LoggerHelper;
 import ru.onlineService.telegramBot.Bot;
@@ -27,9 +26,10 @@ public class ChatDb {
 
     public void add(Chat chat) {
         try {
-            PreparedStatement preparedStatement = Sqllite.getInstanceDb().prepareStatement("INSERT INTO chat VALUES(?, ?)");
+            PreparedStatement preparedStatement = Sqllite.getInstanceDb().prepareStatement("INSERT INTO chat VALUES(?, ?, ?)");
             preparedStatement.setString(1, chat.getId());
             preparedStatement.setString(2, chat.getUserName());
+            preparedStatement.setString(3, chat.getBot().getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -39,7 +39,9 @@ public class ChatDb {
     public HashMap<String, Chat> getAllChats(Bot bot) {
         HashMap<String, Chat> result = new HashMap<>();
         try {
-            ResultSet rs = Sqllite.getInstanceDb().createStatement().executeQuery("SELECT * FROM chat WHERE botId = " + bot.getId());
+            String sql = "SELECT * FROM chat WHERE botId = \"" + bot.getId() + "\"";
+            System.out.println(sql);
+            ResultSet rs = Sqllite.getInstanceDb().createStatement().executeQuery(sql);
             while (rs.next()) {
                 Chat chat = new Chat(rs.getString("id"), rs.getString("userName"), bot);
                 result.put(chat.getId(), chat);
@@ -58,10 +60,11 @@ public class ChatDb {
         return result;
     }
 
-    public void remove(String chatId){
+    public void remove(Chat chat){
         try {
-            PreparedStatement preparedStatement = Sqllite.getInstanceDb().prepareStatement("DELETE FROM chat WHERE id = ?");
-            preparedStatement.setString(1, chatId);
+            PreparedStatement preparedStatement = Sqllite.getInstanceDb().prepareStatement("DELETE FROM chat WHERE id = ? AND botId = ?");
+            preparedStatement.setString(1, chat.getId());
+            preparedStatement.setString(2, chat.getBot().getId());
             preparedStatement.execute();
 
         } catch (SQLException e) {

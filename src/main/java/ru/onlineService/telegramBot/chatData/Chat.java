@@ -8,7 +8,6 @@ public class Chat {
 
     private String id;
     private String userName;
-    private String botId;
 
     private final transient Bot bot;
 
@@ -20,16 +19,14 @@ public class Chat {
         return id;
     }
 
-    public Chat setBotId(String botId) {
-        this.botId = botId;
-        return this;
+    public Bot getBot() {
+        return bot;
     }
 
     public Chat(String id, String userName, Bot bot) {
         this.id = id;
         this.userName = userName;
         this.bot = bot;
-        this.botId = bot.getId();
     }
 
     public void sendMessage(String text){

@@ -37,13 +37,13 @@ public class ConfigProperties {
                 }
 
             } catch (Exception e) {
-                LoggerHelper.errorWithSendingBot("Config file not found", e);
+                LoggerHelper.error("Config file not found", e);
             } finally {
                 if (inputStream != null) {
                     try {
                         inputStream.close();
                     } catch (IOException e) {
-                        LoggerHelper.errorWithSendingBot("Can't close inputStream", e);
+                        LoggerHelper.error("Can't close inputStream", e);
                     }
                 }
             }

@@ -48,7 +48,7 @@ public class Commands {
             return;
         }
         if (update.message().text().startsWith(EXIT)) {
-            chatHandler.removeChat(chatId);
+            chatHandler.removeChat(chat);
             bot.getTelegramBot().execute(new SendMessage(chatId, "Выход выполнен"));
         } else {
             bot.getTelegramBot().execute(new SendMessage(chatId, "Не известная команда"));

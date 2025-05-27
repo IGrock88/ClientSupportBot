@@ -18,7 +18,7 @@ public class RequestAddMessageToBot {
 
     public String getBotMessage(){
         StringBuilder messageBuilder = new StringBuilder();
-        messageBuilder.append("Бот техподдержки. \n--------------------------------\n");
+        messageBuilder.append("Бот ").append(getBotId()).append("\n--------------------------------\n");
         if (request.getPhone() != null){
             messageBuilder.append("Телефон: ").append(request.getPhone()).append("\n");
         }

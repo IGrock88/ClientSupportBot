@@ -19,6 +19,11 @@ public class RequestAddMessageToBot {
     public String getBotMessage(){
         StringBuilder messageBuilder = new StringBuilder();
         messageBuilder.append("Бот ").append(getBotId()).append("\n--------------------------------\n");
+
+        if (request.isAutoReplied()){
+            messageBuilder.append("ОТВЕТ ДАН АВТОМАТИЧЕСКИ\n");
+        }
+
         if (request.getPhone() != null){
             messageBuilder.append("Телефон: ").append(request.getPhone()).append("\n");
         }
@@ -38,6 +43,10 @@ public class RequestAddMessageToBot {
 
         if (request.getCategory() != null){
             messageBuilder.append("Тема: ").append(request.getCategory()).append("\n");
+        }
+
+        if (request.getInvoiceId() != null && !request.getInvoiceId().isEmpty()){
+            messageBuilder.append("Номер заказа: ").append(request.getInvoiceId()).append("\n");
         }
 
         messageBuilder.append("Сообщение:\n").append(request.getMessage()).append("\n--------------------------------\n");

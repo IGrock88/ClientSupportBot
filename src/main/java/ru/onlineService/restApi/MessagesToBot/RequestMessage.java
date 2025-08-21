@@ -11,6 +11,8 @@ public class RequestMessage {
     private boolean isAuth;
     private String profileLink;
     private String messageLink;
+    private boolean autoReplied;
+    private String invoiceId;
 
     public String getMessage() {
         return message;
@@ -46,5 +48,13 @@ public class RequestMessage {
 
     public String getMessageLink() {
         return messageLink;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public boolean isAutoReplied() {
+        return autoReplied;
     }
 }

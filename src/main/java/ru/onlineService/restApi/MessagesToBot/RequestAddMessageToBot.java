@@ -21,7 +21,7 @@ public class RequestAddMessageToBot {
         messageBuilder.append("Бот ").append(getBotId()).append("\n--------------------------------\n");
 
         if (request.isAutoReplied()){
-            messageBuilder.append("ОТВЕТ ДАН АВТОМАТИЧЕСКИ\n");
+            messageBuilder.append("! ЗАКРЫТ АВТОМАТИЧЕСКИ !\n");
         }
 
         if (request.getPhone() != null){
